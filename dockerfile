@@ -14,6 +14,6 @@ RUN if [ "$racktablesVersion" != "latest" ]; then racktablesVersionURL="RackTabl
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 9000
+EXPOSE 80
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/bin/supervisord"]
