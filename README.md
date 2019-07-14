@@ -32,11 +32,15 @@ Racktables is a nifty and robust solution for datacenter and server room asset m
 
 Here is the command to run the mysql container with the correct specific parameters for racktables:
 
-`docker run -d -it --name racktables-db -e MYSQL_DATABASE=myNiceDbName -e MYSQL_USER=myNiceDbUserName -e MYSQL_PASSWORD=myNiceDbPassword -e MYSQL_ROOT_PASSWORD=myNiceROOTDbPassword --restart=always --hostname=racktables-db mysql:5.7 --character-set-server=utf8 --collation-server=utf8_unicode_ci`
+```shell
+docker run -d -it --name racktables-db -e MYSQL_DATABASE=myNiceDbName -e MYSQL_USER=myNiceDbUserName -e MYSQL_PASSWORD=myNiceDbPassword -e MYSQL_ROOT_PASSWORD=myNiceROOTDbPassword --restart=always --hostname=racktables-db mysql:5.7 --character-set-server=utf8 --collation-server=utf8_unicode_ci
+```
 
 And here for the racktables application:
 
-`docker run -d -it --name racktables-ui --link racktables-db:mysql -e dbHost="racktables-db" -e dbName="myNiceDbName" -e dbUser="myNiceDbUserName" -e dbPass="myNiceDbPassword" --restart=always --hostname=racktables-ui jbd92/racktables:latest`
+```shell
+docker run -d -it --name racktables-ui --link racktables-db:mysql -e dbHost="racktables-db" -e dbName="myNiceDbName" -e dbUser="myNiceDbUserName" -e dbPass="myNiceDbPassword" --restart=always --hostname=racktables-ui jbd92/racktables:latest
+```
 
 ### Environment Variables
 
