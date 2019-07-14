@@ -48,10 +48,10 @@ As you can see, there are several environment variables. Here is the full list w
 
 Docker Environment Var. | Default Value | Description
 ------------- | ------------- | -------------
-dbName | myNiceDbName | MySQL database name
+dbName | racktables_db | MySQL database name
 dbHost | racktables_host | MySQL hostname
 dbPort | 3306 | MySQL port
-dbUser | myNiceDbUserName | MySQL user
+dbUser | racktables_user | MySQL user
 dbPass | racktables_pwd | MySQL password
 
 ## License
