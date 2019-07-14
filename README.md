@@ -1,11 +1,14 @@
 # Racktables
 
-![Logo](https://avatars1.githubusercontent.com/u/1536973?s=400&v=4)
-![Racktables](https://www.racktables.org/img/logo.png)
-
-[![Inline docs](http://inch-ci.org/github/JayBeeDe/Frq-Bash-Library.svg?branch=master)](http://inch-ci.org/github/JayBeeDe/Frq-Bash-Library) [![HitCount](http://hits.dwyl.com/JayBeeDe/Frq-Bash-Library.svg)](http://hits.dwyl.com/JayBeeDe/Frq-Bash-Library)
+<p align="center">
+<img src="https://avatars1.githubusercontent.com/u/1536973?s=400&v=4" width="150px" height="150px"/>
+<br />
+<img src="https://www.racktables.org/img/logo.png"/>
+</p>
 
 ## What is racktables?
+
+[![Inline docs](http://inch-ci.org/github/JayBeeDe/docker_racktables.svg?branch=master)](http://inch-ci.org/github/JayBeeDe/docker_racktables) [![HitCount](http://hits.dwyl.com/JayBeeDe/docker_racktables.svg)](http://hits.dwyl.com/JayBeeDe/docker_racktables)
 
 Racktables is a nifty and robust solution for datacenter and server room asset management. It helps document hardware assets, network addresses, space in racks, networks configuration and much much more!
 
@@ -27,12 +30,17 @@ Racktables is a nifty and robust solution for datacenter and server room asset m
 
 ## How to use this image
 
-`docker run -d -it --name racktables-db -e MYSQL_DATABASE=myNiceDbName -e MYSQL_USER=myNiceDbUserName -e MYSQL_PASSWORD=myNiceDbPassword -e MYSQL_ROOT_PASSWORD=myNiceROOTDbPassword --restart=always --hostname=racktables-db mysql:5.7 --character-set-server=utf8 --collation-server=utf8_unicode_ci
-docker run -d -it --name racktables-ui --link racktables-db:mysql -e dbHost="racktables-db" -e dbName="myNiceDbName" -e dbUser="myNiceDbUserName" -e dbPass="myNiceDbPassword" --restart=always --hostname=racktables-ui jbd92/racktables:latest`
+Here is the command to run the mysql container with the correct specific parameters for racktables:
+
+`docker run -d -it --name racktables-db -e MYSQL_DATABASE=myNiceDbName -e MYSQL_USER=myNiceDbUserName -e MYSQL_PASSWORD=myNiceDbPassword -e MYSQL_ROOT_PASSWORD=myNiceROOTDbPassword --restart=always --hostname=racktables-db mysql:5.7 --character-set-server=utf8 --collation-server=utf8_unicode_ci`
+
+And here for the racktables application:
+
+`docker run -d -it --name racktables-ui --link racktables-db:mysql -e dbHost="racktables-db" -e dbName="myNiceDbName" -e dbUser="myNiceDbUserName" -e dbPass="myNiceDbPassword" --restart=always --hostname=racktables-ui jbd92/racktables:latest`
 
 ### Environment Variables
 
-As you can see, there are several environment variables. Here is the full list <ith their default values:
+As you can see, there are several environment variables. Here is the full list with their default values:
 
 Docker Environment Var. | Default Value | Description
 ------------- | ------------- | -------------
@@ -45,6 +53,3 @@ dbPass | racktables_pwd | MySQL password
 ## License
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; [version 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) of the License.
-
-
-
