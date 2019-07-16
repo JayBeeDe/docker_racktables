@@ -30,6 +30,10 @@ Racktables is a nifty and robust solution for datacenter and server room asset m
 
 ## How to use this image
 
+### Racktables Partial-Automatic Install
+
+In this section, since no database structure exists here, the step that *initializes the database still has to be done _manually_*.
+
 Here is the command to run the mysql container with the correct specific parameters for racktables:
 
 ```shell
@@ -39,10 +43,44 @@ docker run -d -it --name racktables-db -e MYSQL_DATABASE=myNiceDbName -e MYSQL_U
 And here for the racktables application:
 
 ```shell
-docker run -d -it --name racktables-ui --link racktables-db:mysql -e dbHost="racktables-db" -e dbName="myNiceDbName" -e dbUser="myNiceDbUserName" -e dbPass="myNiceDbPassword" --restart=always --hostname=racktables-ui jbd92/racktables:latest
+docker run -d -it --name racktables-ui --link racktables-db:mysql -e dbHost="racktables-db" -e dbName="myNiceDbName" -e dbUser="myNiceDbUserName" -e dbPass="myNiceDbPassword" --restart=always --hostname=racktables-ui -p 8080:80 jbd92/racktables:latest
 ```
 
-### Environment Variables
+Then you just have to visit [http://localhost:8080/?module=installer&step=5](http://localhost:8080/?module=installer&step=5) in order to *create the database structure* as well as the *administrator password*: follow the legacy racktables install instructions on the screen. After that manual action you can enjoy racktables!
+
+### Racktables Full-Automatic Install
+
+In this section, we mount a volume which contains the SQL install script into docker-entrypoint-initdb.d directory, so that it runs only once at the database container's first run! This script will automatically create the database structure as well as the Administrator password.
+
+First you need to download the SQL script somewhere on the container host: let's say into /opt/tmp/ (you can choose something better or create a volume and put the ini.sql file into that volume):
+
+```shell
+mkdir -p /opt/tmp/
+cd /opt/tmp/
+wget https://github.com/JayBeeDe/docker_racktables/blob/master/db/ini.sql
+```
+
+Then we start the mySQL container:
+
+```shell
+docker run -d -it --name racktables-db -e MYSQL_DATABASE=myNiceDbName -e MYSQL_USER=myNiceDbUserName -e MYSQL_PASSWORD=myNiceDbPassword -e MYSQL_ROOT_PASSWORD=myNiceROOTDbPassword --volume=/opt/tmp:/docker-entrypoint-initdb.d --restart=always --hostname=racktables-db mysql:5.7 --character-set-server=utf8 --collation-server=utf8_unicode_ci
+```
+
+And here for the racktables application (same as Racktables _Partial-Automatic Install_):
+
+```shell
+docker run -d -it --name racktables-ui --link racktables-db:mysql -e dbHost="racktables-db" -e dbName="myNiceDbName" -e dbUser="myNiceDbUserName" -e dbPass="myNiceDbPassword" --restart=always --hostname=racktables-ui -p 8080:80 jbd92/racktables:latest
+```
+
+Contrary to _Partial-Automatic Install_, you can directly jump to [http://localhost:8080/](http://localhost:8080/) and connect with the following credentials:
+- user: admin
+- password: testme
+
+<aside class="warning">
+Change the password as soon as possible!
+</aside>
+
+## Environment Variables
 
 As you can see, there are several environment variables. Here is the full list with their default values:
 
