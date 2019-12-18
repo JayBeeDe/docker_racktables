@@ -16,6 +16,8 @@ EOF
 
 adduser -D -g 'www' www && chown -R www:www /var/www/html && chmod -R 755 /var/www/html
 chown www:www /var/www/html/racktables/inc/secret.php
+chown www:www /var/lib/nginx
+chown www:www /var/tmp/nginx
 chmod 440 /var/www/html/racktables/inc/secret.php
 
 sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = www|g" /etc/php5/php-fpm.conf
@@ -38,4 +40,3 @@ echo "To initialize the db, first go to /?module=installer&step=5 | $@"
 mkdir -p /run/nginx
 
 exec "$@"
-
